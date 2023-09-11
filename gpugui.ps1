@@ -32,9 +32,32 @@ $null = [Console]::Out
 $null = [Console]::Error
 
 # Create a system tray icon with a default Windows icon
+# Create a system tray icon with a custom GPU icon
 $notifyIcon = New-Object System.Windows.Forms.NotifyIcon
-$notifyIcon.Icon = [System.Drawing.SystemIcons]::Information
+
+# Determine the current script directory
+if ($PSScriptRoot) {
+    $currentDir = $PSScriptRoot
+} else {
+    $currentDir = Split-Path (Convert-Path ([Environment]::GetCommandLineArgs())[0])
+}
+
+# Define the path to the GPU icon
+$iconPath = Join-Path $currentDir "gpu.ico"
+
+# Check if the icon file exists
+if (Test-Path $iconPath) {
+    # Load the icon from the file
+    $iconStream = [System.IO.File]::OpenRead($iconPath)
+    $notifyIcon.Icon = [System.Drawing.Icon]::new($iconStream)
+    $iconStream.Close()
+} else {
+    # Icon file not found, use a default icon or handle the error
+    # Example: $notifyIcon.Icon = [System.Drawing.SystemIcons]::Information
+}
+
 $notifyIcon.Visible = $true
+
 
 # Add a context menu to the system tray icon
 $contextMenu = New-Object System.Windows.Forms.ContextMenu
