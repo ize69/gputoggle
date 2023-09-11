@@ -8,4 +8,5 @@ download the repo and extract it where is convenient for you and run the .exe fi
 using PS2EXE https://github.com/MScholtes/PS2EXE 
 
 compile the code using the following command
+
 `PS2EXE -InputFile C:\filepath\gpugui.ps1 -OutputFile C:\filepath\GPUGUI.exe -noconsole`
